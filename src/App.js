@@ -1,25 +1,26 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+// import useWebAnimations from "@wellyshen/use-web-animations";
+import Alice from './components/Alice';
+import Bg1 from './components/Bg1';
+import Bg2 from './components/Bg2';
+import Fg1 from './components/Fg1';
+import Fg2 from './components/Fg2'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Alice></Alice>
+      <Bg1></Bg1>
+      <Bg2></Bg2>
+      <Fg1></Fg1>
+      <Fg2></Fg2>
     </div>
+      
+      
+     
+      
+
   );
 }
 
