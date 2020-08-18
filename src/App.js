@@ -1,8 +1,11 @@
 import React from 'react';
 import './App.css';
+import { useEffect } from "react"; 
 import useWebAnimations from "@wellyshen/use-web-animations";
 
 function App() {
+  var playbackAlice = 1;
+  var playbackFg = 0;
 
   const alice = useWebAnimations({
     keyframes:{
@@ -14,7 +17,7 @@ function App() {
       easing: 'steps(7, end)',
       direction: "reverse",
       duration: 600,
-      playbackRate: 1,
+      playbackRate: playbackAlice,
       iterations: Infinity
     }
     
@@ -27,25 +30,66 @@ function App() {
   
   var sceneryTimingBackground = {
     duration: 36000,
-    iterations: Infinity
+    iterations: Infinity,
+    playbackRate: playbackFg,
   };
   
   var sceneryTimingForeground = {
     duration: 12000,
-    iterations: Infinity
+    iterations: Infinity,
+    playbackRate :  playbackFg , 
   };
 
-  const foreground1 = useWebAnimations(sceneryFrames,sceneryTimingForeground
+  const foreground1 = useWebAnimations({keyframes: sceneryFrames , timing : sceneryTimingForeground})
+  const foreground2 = useWebAnimations({keyframes: sceneryFrames , timing : sceneryTimingForeground})
+  const background1 = useWebAnimations({keyframes :sceneryFrames , sceneryTimingBackground})
+  const background2 = useWebAnimations({keyframes: sceneryFrames , timing: sceneryTimingBackground})
 
-  )
-  const foreground2 = useWebAnimations(sceneryFrames , sceneryTimingForeground)
-  const background1 = useWebAnimations(sceneryFrames , sceneryTimingBackground)
-  const background2 = useWebAnimations(sceneryFrames , sceneryTimingBackground)
+  const adjustBackgroundPlayback = () => {
+    if (playbackAlice < 0.8) 
+    {
+			playbackFg = (playbackAlice / 2) * -1;
+    } 
+    else if (playbackFg > 1.2) 
+    {
+			playbackFg = playbackAlice / 2;
+    } 
+    else {
+			playbackFg = 0;
+		}
+		foreground1.getAnimation().playbackRate = playbackFg;
+		foreground2.getAnimation().playbackRate = playbackFg;
+		background1.getAnimation().playbackRate = playbackFg;
+		background2.getAnimation().playbackRate = playbackFg;
+  };
+  
+  useEffect(() => {
+		const fganimation = foreground1.getAnimation();
+    fganimation.currentTime = 6000
+    // fganimation.effect.getTiming().duration / 2;
+
+		const bganimation = background1.getAnimation();
+    bganimation.currentTime = 18000
+    // bganimation.effect.getTiming().duration / 2;
+
+		setInterval(() => {
+			/* Set decay */
+			if (playbackAlice > 0.4) {
+				playbackAlice *= 0.9;
+				alice.getAnimation().playbackRate = playbackAlice;
+			}
+			adjustBackgroundPlayback();
+		}, 4000);
+
+		document.addEventListener("click", () => {
+			playbackAlice =playbackAlice*1.1;
+			alice.getAnimation().playbackRate = playbackAlice;
+			adjustBackgroundPlayback();
+		});
+	});
 
 
   return (
-    // <div>hello</div>
-  
     <div className= "wrapper">
       <div className = "rq">
       <div className="sky">   
