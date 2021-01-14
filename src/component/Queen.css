@@ -56,24 +56,26 @@ img {
   }
 
 .red-queen_and_alice {
-    padding-top: 87%;
+    /* padding-top: 87%; */
     position: absolute;
     top: 0; left: 50%;
     transform: translate(-50%, -50%);
     overflow: hidden;
     width: 80%;
-    max-width: 450px; /*height: 783px / 2*/
+    max-width: 450px;
+    height: 380px ;
     z-index: 1;
 }
 .red-queen_and_alice_sprite {
     position: absolute;
-    top: 0; left: 0;
+    top: 0px; left: 0;
     width: 100%;
 }
 .red-queen_and_alice:before {
     content: " ";
     display: block;
-    padding-top: 87%;
+    padding-top: 100%;
+    /* padding-bottom: 10%; */
 }
 
 .sky, .earth {
